@@ -15,13 +15,25 @@ function headers(json = true) {
 }
 
 async function api(path, options = {}) {
-    const response = await fetch(API + path, {
-        ...options,
-        headers: { ...headers(options.body !== undefined), ...(options.headers || {}) },
-    });
+    let response;
+    try {
+        response = await fetch(API + path, {
+            ...options,
+            headers: { ...headers(options.body !== undefined), ...(options.headers || {}) },
+        });
+    } catch {
+        throw new Error("Server is not reachable. Please wait and try again.");
+    }
     if (!response.ok) {
-        const err = await response.json().catch(() => ({ message: response.statusText }));
-        throw new Error(err.message || "Request failed");
+        const text = await response.text();
+        let err = {};
+        try {
+            err = text ? JSON.parse(text) : {};
+        } catch {
+            err = { message: text };
+        }
+        const fieldErrors = err.errors ? Object.values(err.errors).join(", ") : "";
+        throw new Error(fieldErrors || err.message || response.statusText || `Request failed with ${response.status}`);
     }
     return response.status === 204 ? null : response.json();
 }
