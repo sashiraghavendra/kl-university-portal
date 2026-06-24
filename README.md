@@ -22,6 +22,5 @@ KL University Portal is a production-style full-stack University ERP and Admissi
 - Frontend: HTML5, CSS3, JavaScript, Bootstrap 5, Font Awesome, Chart.js
 - Backend: Java 17, Spring Boot 3, Spring Security, Spring Data JPA, Hibernate, Lombok
 - Database: MySQL
-- Security: JWT, BCrypt
-- Documents: OpenPDF, ZXing QR codes
+- Security: JWT
 - Build: Maven
