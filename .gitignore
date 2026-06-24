@@ -1,7 +1,0 @@
-target/
-uploads/
-*.log
-*.err.log
-.env
-.DS_Store
-Thumbs.db
